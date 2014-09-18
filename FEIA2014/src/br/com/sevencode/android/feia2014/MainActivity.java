@@ -1,26 +1,106 @@
 package br.com.sevencode.android.feia2014;
 
-import android.app.Activity;
+import java.util.List;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
+import android.app.ProgressDialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.EditText;
+import br.com.sevencode.android.feia2014.db.DaoMaster;
+import br.com.sevencode.android.feia2014.db.DaoSession;
+import br.com.sevencode.android.feia2014.db.DaoMaster.DevOpenHelper;
+import br.com.sevencode.android.feia2014.db.Event;
+import br.com.sevencode.android.feia2014.db.EventDao;
+import br.com.sevencode.android.feia2014.db.MyEventDao;
+import br.com.sevencode.android.feia2014.task.LoadEventTask;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+	private SQLiteDatabase db;
+
+	private DaoMaster daoMaster;
+	private DaoSession daoSession;
+	private EventDao eventDao;
+	private MyEventDao myEventDao;
+
+	private Cursor cursor;
+	
+	protected ProgressDialog progressDialog = null;
+	
+	public void showThrobber(){
+		this.hideThrobber();
+		this.progressDialog = new ProgressDialog(this);
+		this.progressDialog.setTitle("Carregando...");
+		this.progressDialog.show();
+	}
+	
+	public void hideThrobber(){
+		if(this.progressDialog != null){
+			if(this.progressDialog.isShowing()){
+				this.progressDialog.dismiss();
+			}
+			
+			this.progressDialog = null;
+		}
+	}
+/*
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.main);
+
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "feia-db",
+				null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		eventDao = daoSession.getEventDao();
+		myEventDao = daoSession.getMyEventDao();*/
+/*
+		String textColumn = NoteDao.Properties.Text.columnName;
+		String orderBy = textColumn + " COLLATE LOCALIZED ASC";
+		cursor = db.query(noteDao.getTablename(), noteDao.getAllColumns(),
+				null, null, null, null, orderBy);
+		String[] from = { textColumn, NoteDao.Properties.Comment.columnName };
+		int[] to = { android.R.id.text1, android.R.id.text2 };
+
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+				android.R.layout.simple_list_item_2, cursor, from, to);
+		setListAdapter(adapter);
+
+		editText = (EditText) findViewById(R.id.editTextNote);
+		addUiListeners();
+	
+	}
+*/
+/*
+	private void addNote() {
+		String noteText = editText.getText().toString();
+		editText.setText("");
+
+		final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+				DateFormat.MEDIUM);
+		String comment = "Added on " + df.format(new Date());
+		Note note = new Note(null, noteText, comment, new Date());
+		noteDao.insert(note);
+		Log.d("DaoExample", "Inserted new note, ID: " + note.getId());
+
+		cursor.requery();
+	}*/
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -40,11 +120,31 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+        
+
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "feia-db",
+				null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		eventDao = daoSession.getEventDao();
+		myEventDao = daoSession.getMyEventDao();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        
+        List<Event> events = eventDao.queryBuilder().list();
+        
+        if(events == null || events.size() == 0){
+        	new LoadEventTask(this).execute();
+        }
+    }
+    
+    public void saveEvents(List events){
+    	eventDao.insertInTx(events);
+    	hideThrobber();
     }
 
     @Override
