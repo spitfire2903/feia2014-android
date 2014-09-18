@@ -25,9 +25,21 @@ public class SCTextView extends TextView {
 		this.baseInit();
 	}
 	
-	public void baseInit(){
+	private void baseInit(){
 		Typeface font = Typeface.createFromAsset(this.getContext().getAssets(), "fonts/GeosansLight.ttf");
 		setTypeface(font);
 	}
-
+	/*
+	private void init(AttributeSet attrs) {
+		if (attrs!=null) {
+			 TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SCTextView);
+			 String fontName = a.getString(R.styleable.SCTextView_fontName);
+			 if (fontName!=null) {
+				 Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/"+fontName);
+				 setTypeface(myTypeface);
+			 }
+			 a.recycle();
+		}
+	}
+*/
 }
