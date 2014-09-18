@@ -44,6 +44,7 @@ public class MainActivity extends Activity
 		this.hideThrobber();
 		this.progressDialog = new ProgressDialog(this);
 		this.progressDialog.setTitle("Carregando...");
+		this.progressDialog.setMessage("Aguarde um instante");
 		this.progressDialog.show();
 	}
 	
@@ -142,8 +143,11 @@ public class MainActivity extends Activity
         }
     }
     
-    public void saveEvents(List events){
-    	eventDao.insertInTx(events);
+    public void saveEvents(List<Event> events){
+    	//eventDao.insertInTx(events);
+    	for (Event object : events) {
+			eventDao.insert(object);
+		}
     	hideThrobber();
     }
 

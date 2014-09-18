@@ -87,7 +87,7 @@ public class LoadEventTask extends AsyncTask<Void, Void, Void> {
 				events.add(e);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 	
@@ -100,6 +100,7 @@ public class LoadEventTask extends AsyncTask<Void, Void, Void> {
 		
 		try {
 			event.setEventId(json.getInt("eventId"));
+			event.setDuration(json.getInt("duration"));
 			event.setName(json.getString("name"));
 			event.setType(json.getInt("type"));
 			event.setCategory(json.getInt("category"));
@@ -112,12 +113,13 @@ public class LoadEventTask extends AsyncTask<Void, Void, Void> {
 			
 			for (int i = 0; i < dates.length(); i++) {
 				if(i == 0){
-					event.setDate(sdf.parse(dateStr));
 					dateStr = dates.getString(i);
+					event.setDate(sdf.parse(dateStr));
 				} else{
 					dateStr += "|"+dates.getString(i);
 				}
 			}
+			event.setDateArray(dateStr);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
