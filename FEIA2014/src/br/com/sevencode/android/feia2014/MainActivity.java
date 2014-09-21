@@ -16,13 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import br.com.sevencode.android.feia2014.db.DaoMaster;
-import br.com.sevencode.android.feia2014.db.DaoSession;
 import br.com.sevencode.android.feia2014.db.DaoMaster.DevOpenHelper;
+import br.com.sevencode.android.feia2014.db.DaoSession;
 import br.com.sevencode.android.feia2014.db.Event;
 import br.com.sevencode.android.feia2014.db.EventDao;
 import br.com.sevencode.android.feia2014.db.MyEventDao;
+import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
 import br.com.sevencode.android.feia2014.task.LoadEventTask;
 
 
@@ -36,6 +36,8 @@ public class MainActivity extends Activity
 	private EventDao eventDao;
 	private MyEventDao myEventDao;
 
+	private int menuSelected;
+	
 	private Cursor cursor;
 	
 	protected ProgressDialog progressDialog = null;
@@ -57,52 +59,6 @@ public class MainActivity extends Activity
 			this.progressDialog = null;
 		}
 	}
-/*
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.main);
-
-		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "feia-db",
-				null);
-		db = helper.getWritableDatabase();
-		daoMaster = new DaoMaster(db);
-		daoSession = daoMaster.newSession();
-		eventDao = daoSession.getEventDao();
-		myEventDao = daoSession.getMyEventDao();*/
-/*
-		String textColumn = NoteDao.Properties.Text.columnName;
-		String orderBy = textColumn + " COLLATE LOCALIZED ASC";
-		cursor = db.query(noteDao.getTablename(), noteDao.getAllColumns(),
-				null, null, null, null, orderBy);
-		String[] from = { textColumn, NoteDao.Properties.Comment.columnName };
-		int[] to = { android.R.id.text1, android.R.id.text2 };
-
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_2, cursor, from, to);
-		setListAdapter(adapter);
-
-		editText = (EditText) findViewById(R.id.editTextNote);
-		addUiListeners();
-	
-	}
-*/
-/*
-	private void addNote() {
-		String noteText = editText.getText().toString();
-		editText.setText("");
-
-		final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
-				DateFormat.MEDIUM);
-		String comment = "Added on " + df.format(new Date());
-		Note note = new Note(null, noteText, comment, new Date());
-		noteDao.insert(note);
-		Log.d("DaoExample", "Inserted new note, ID: " + note.getId());
-
-		cursor.requery();
-	}*/
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -143,6 +99,21 @@ public class MainActivity extends Activity
         }
     }
     
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	// TODO Auto-generated method stub
+    	super.onRestoreInstanceState(savedInstanceState);
+    	//menuSelected = savedInstanceState.getInt("menuSelected");
+    	goToFragment(getFragmentByPosition(menuSelected));
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	// TODO Auto-generated method stub
+    	super.onSaveInstanceState(outState);
+    	outState.putInt("menuSelected", menuSelected);
+    }
+    
     public void saveEvents(List<Event> events){
     	//eventDao.insertInTx(events);
     	for (Event object : events) {
@@ -160,6 +131,99 @@ public class MainActivity extends Activity
                 .commit();
     }
 
+    public void goToFragment(BaseFragment fragment) {
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+        
+        this.menuSelected = getPositionByFragment(fragment);
+    }
+    
+    public BaseFragment getFragmentByPosition(int position){
+    	BaseFragment fragment = null;
+    	
+    	switch (position) {
+		case 0:
+			fragment = new CalendarFragment();
+			break;
+		case 1:
+			fragment = new ExhibitionFragment();
+			break;
+		case 2:
+			fragment = new PartyFragment();
+			break;
+		case 3:
+			fragment = new PartnerFragment();
+			break;
+		case 4:
+			//fragment = new ma();
+			break;
+		case 5:
+			fragment = new WorkshopListFragment(EventCategory.GENERAL);
+			break;
+		case 6:
+			fragment = new WorkshopListFragment(EventCategory.VISUAL_ARTS);
+			break;
+		case 7:
+			fragment = new WorkshopListFragment(EventCategory.PERFORMING_ARTS);
+			break;
+		case 8:
+			fragment = new WorkshopListFragment(EventCategory.DANCING);
+			break;
+		case 9:
+			fragment = new WorkshopListFragment(EventCategory.MUSIC);
+			break;
+		default:
+			fragment = new WorkshopListFragment(EventCategory.MEDIALOGY);
+			break;
+		}
+    	
+    	return fragment;
+    }
+    
+    public int getPositionByFragment(BaseFragment fragment){
+    	int position = 0;
+    	
+    	if(fragment instanceof CalendarFragment){
+    		position = 0;
+    	} else if(fragment instanceof ExhibitionFragment){
+    		position = 1;
+    	} else if (fragment instanceof PartyFragment) {
+			position = 2;
+		} else if (fragment instanceof PartnerFragment) {
+			position = 3;
+		//} else if (fragment instanceof ma) {
+		//	position = 4;
+		} else if (fragment instanceof WorkshopListFragment) {
+			switch (((WorkshopListFragment)fragment).getSelectedCategory()) {
+			case GENERAL:
+				position = 5;
+				break;
+			case VISUAL_ARTS:
+				position = 6;
+				break;
+			case PERFORMING_ARTS:
+				position = 7;
+				break;
+			case DANCING:
+				position = 8;
+				break;
+			case MUSIC:
+				position = 9;
+				break;
+			case MEDIALOGY:
+				position = 10;
+				break;
+			default:
+				break;
+			}
+		}
+    		
+		return position;
+    }
+    
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:

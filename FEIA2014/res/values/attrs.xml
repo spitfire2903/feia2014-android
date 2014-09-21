@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<declare-styleable name="SCTextView">
-		<attr name="fontName" format="string" />
-	</declare-styleable> 
+
+    <declare-styleable name="SCTextView">
+    </declare-styleable>
+    <declare-styleable name="SCSpinner">
+    </declare-styleable>
+    <declare-styleable name="SCButton">
+    </declare-styleable>
+
 </resources>

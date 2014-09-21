@@ -5,16 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CalendarFragment extends BaseFragment {
-
-	public CalendarFragment() {
-		// TODO Auto-generated constructor stub
-	}
+public class PartnerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-        getActivity().setTitle("Meu Calendário");
+        View rootView = inflater.inflate(R.layout.fragment_partner, container, false);
+        getActivity().setTitle("Parceiros");
         return rootView;
     }
 }

@@ -100,7 +100,7 @@ public class LoadEventTask extends AsyncTask<Void, Void, Void> {
 		
 		try {
 			event.setEventId(json.getInt("eventId"));
-			event.setDuration(json.getInt("duration"));
+			// event.setDuration(json.getInt("duration"));
 			event.setName(json.getString("name"));
 			event.setType(json.getInt("type"));
 			event.setCategory(json.getInt("category"));

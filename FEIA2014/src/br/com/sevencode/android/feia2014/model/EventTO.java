@@ -67,6 +67,33 @@ public class EventTO implements Serializable {
 			return et;
 		}
 		
+		public String getEventCategoryDescription(){
+			String description = null;
+			
+			switch (this) {
+			case GENERAL:
+				description = "Interdisciplinar";
+				break;
+			case VISUAL_ARTS:
+				description = "Artes Visuais";
+				break;
+			case PERFORMING_ARTS:
+				description = "Artes Cênicas";
+				break;
+			case DANCING:
+				description = "Dança";
+				break;
+			case MUSIC:
+				description = "Música";
+				break;
+			case MEDIALOGY:
+				description = "Midialogia";
+				break;
+			}
+			
+			return description;
+		}
+		
 	}
 	
 	/**

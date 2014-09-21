@@ -1,26 +1,29 @@
 package br.com.sevencode.android.feia2014;
 
 
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+import br.com.sevencode.android.feia2014.components.SCButton;
+import br.com.sevencode.android.feia2014.listener.MenuOnClickListener;
+import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -53,11 +56,24 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
+    private LinearLayout mDrawerMenuView;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-
+    
+    private SCButton mMyCalendar;
+    private SCButton mExhibition;
+    private SCButton mParty;
+    private SCButton mPartner;
+    private SCButton mMap;
+    private SCButton mWorkshopGeneral;
+    private SCButton mWorkshopVisualArts;
+    private SCButton mWorkshopPerformingArts;
+    private SCButton mWorkshopDancing;
+    private SCButton mWorkshopMusic;
+    private SCButton mWorkshopMedialogy;
+    
     public NavigationDrawerFragment() {
     }
 
@@ -89,8 +105,35 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+    	View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        mDrawerMenuView = (LinearLayout) view.findViewById(R.id.menuView);
+        
+        mMyCalendar = (SCButton)view.findViewById(R.id.btnMyCalendar);
+        mExhibition = (SCButton)view.findViewById(R.id.btnExhibition);
+        mParty = (SCButton)view.findViewById(R.id.btnParty);
+        mPartner = (SCButton)view.findViewById(R.id.btnPartner);
+        mMap = (SCButton)view.findViewById(R.id.btnMap);
+        mWorkshopGeneral = (SCButton)view.findViewById(R.id.btnWorkshopGeneral);
+        mWorkshopVisualArts = (SCButton)view.findViewById(R.id.btnWorkshopVisualArts);
+        mWorkshopPerformingArts = (SCButton)view.findViewById(R.id.btnWorkshopPerformingArts);
+        mWorkshopDancing = (SCButton)view.findViewById(R.id.btnWorkshopDancing);
+        mWorkshopMusic = (SCButton)view.findViewById(R.id.btnWorkshopMusic);
+        mWorkshopMedialogy = (SCButton)view.findViewById(R.id.btnWorkshopMedialogy);
+ 
+        mMyCalendar.setOnClickListener(new MenuOnClickListener(this, new CalendarFragment()));
+        mExhibition.setOnClickListener(new MenuOnClickListener(this, new ExhibitionFragment()));
+        mParty.setOnClickListener(new MenuOnClickListener(this, new PartyFragment()));
+        mPartner.setOnClickListener(new MenuOnClickListener(this, new PartnerFragment()));
+        //mMap.setOnClickListener(new MenuOnClickListener(this, new Map()));
+        mWorkshopGeneral.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.GENERAL)));        
+        mWorkshopVisualArts.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.VISUAL_ARTS)));        
+        mWorkshopPerformingArts.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.PERFORMING_ARTS)));        
+        mWorkshopDancing.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.DANCING)));        
+        mWorkshopMusic.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.MUSIC)));        
+        mWorkshopMedialogy.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.MEDIALOGY)));        
+       
+    	/*
+        mDrawerListView = (ListView) view.findViewById(R.id.menuList);//.findViewById(R.id.menuListView);//.findViewById(R.id.menuListView);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,7 +150,8 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section3),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        return mDrawerListView;
+        */
+        return view;
     }
 
     public boolean isDrawerOpen() {
@@ -200,6 +244,12 @@ public class NavigationDrawerFragment extends Fragment {
             mCallbacks.onNavigationDrawerItemSelected(position);
         }
     }
+    
+    public void dismissDrawer(){
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mFragmentContainerView);
+        }   	
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -277,6 +327,6 @@ public class NavigationDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
-    }
+		void onNavigationDrawerItemSelected(int position);
+	}
 }

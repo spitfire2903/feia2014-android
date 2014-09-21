@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dancingColor">#ED2459</color>
+    <color name="musicColor">#B5353B</color>
+    <color name="visualArtsColor">#DB5727</color>
+    <color name="performingArtsColor">#782014</color>
+    <color name="medialogyColor">#AB5333</color>
+    <color name="generalColor">#EDB83B</color>
+    <color name="creditsColor">#A8AB8A</color>
+    <color name="partyColor">#BA4A4A</color>
+    <color name="redBrownColor">#CA856D</color>
+</resources>

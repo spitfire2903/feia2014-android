@@ -9,5 +9,8 @@
          https://developer.android.com/design/patterns/navigation-drawer.html
     -->
     <dimen name="navigation_drawer_width">240dp</dimen>
-
+    
+    <dimen name="menu_separator">16dp</dimen>
+    <dimen name="partnerMarginTopBottom">86dp</dimen>
+	<dimen name="partnerMarginLeftRight">70dp</dimen>
 </resources>

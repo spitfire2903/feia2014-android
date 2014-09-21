@@ -1,9 +1,152 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cccc"
+    android:background="@android:color/white"
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
-    tools:context="br.com.sevencode.android.feia2014.NavigationDrawerFragment" />
+    tools:context="br.com.sevencode.android.feia2014.NavigationDrawerFragment" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:alpha="0.3"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_cara_feia_marrom" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/menuView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/menu_separator"
+                android:background="#DDD" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnMyCalendar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Meu Calendário" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/menu_separator"
+                android:background="#DDD" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnExhibition"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Apresentações" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnParty"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Noites FEIA" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnPartner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Parcerias" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnMap"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Mapa" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/menu_separator"
+                android:background="#DDD" >
+
+                <br.com.sevencode.android.feia2014.components.SCTextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Oficinas"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnWorkshopGeneral"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Interdisciplinares" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnWorkshopVisualArts"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Artes Visuais" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnWorkshopPerformingArts"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Artes Cênicas" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnWorkshopDancing"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Dança" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnWorkshopMusic"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Música" />
+
+            <br.com.sevencode.android.feia2014.components.SCButton
+                android:id="@+id/btnWorkshopMedialogy"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Midialogia" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
