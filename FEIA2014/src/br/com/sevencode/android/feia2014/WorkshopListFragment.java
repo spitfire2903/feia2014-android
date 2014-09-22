@@ -4,10 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.AdapterView.OnItemClickListener;
+import br.com.sevencode.android.feia2014.adapter.ExhibitionAdapter;
+import br.com.sevencode.android.feia2014.adapter.WorkshopAdapter;
 import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
+import br.com.sevencode.android.feia2014.model.EventTO.EventType;
+import br.com.sevencode.android.feia2014.task.GetEventTask;
 
 public class WorkshopListFragment extends BaseFragment {
-	
+	private GridView workshopGridView = null;
 	private EventCategory selectedCategory;
 	
 	public WorkshopListFragment(EventCategory category) {
@@ -27,6 +34,28 @@ public class WorkshopListFragment extends BaseFragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_workshop, container, false);
         getActivity().setTitle("Oficina "+selectedCategory.getEventCategoryDescription());
-        return rootView;
-    }
+;
+		workshopGridView = (GridView) rootView.findViewById(R.id.workshopListGrid);
+		workshopGridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				((MainActivity)getActivity()).goToEventInfo(getEvents().get(position));
+
+			}
+		});
+
+		GetEventTask task = new GetEventTask(this, selectedCategory, EventType.WORKSHOP);
+		task.execute();
+
+		return rootView;
+	}
+
+	@Override
+	public void setAdapter() {
+		super.setAdapter();
+		if(workshopGridView != null)
+			workshopGridView.setAdapter(new WorkshopAdapter(getActivity(), R.layout.workshop_item, getEvents()));
+	}
 }

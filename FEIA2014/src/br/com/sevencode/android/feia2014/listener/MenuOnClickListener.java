@@ -11,6 +11,7 @@ public class MenuOnClickListener implements OnClickListener {
 
 	private BaseFragment mFragment;
 	private MainActivity mActivity;
+	private int mPosition = 0;
 	private NavigationDrawerFragment mNavigationDrawer;
 	
 	public MenuOnClickListener(NavigationDrawerFragment navigationDrawer, BaseFragment fragment) {
@@ -19,10 +20,22 @@ public class MenuOnClickListener implements OnClickListener {
 		this.mActivity = (MainActivity) navigationDrawer.getActivity();
 	}
 	
+	public MenuOnClickListener(NavigationDrawerFragment navigationDrawer, int position) {
+		this.mPosition = position;
+		mNavigationDrawer = navigationDrawer;
+		this.mActivity = (MainActivity) navigationDrawer.getActivity();
+	}
+	
 	@Override
 	public void onClick(View v) {
+		if(mFragment != null){
+			mNavigationDrawer.selectItem(mActivity.getPositionByFragment(mFragment));
+		} else {
+			mNavigationDrawer.selectItem(mPosition);
+		}
+		
 		mNavigationDrawer.dismissDrawer();
-		mActivity.goToFragment(this.mFragment);
+		//mActivity.goToFragment(this.mFragment);
 		//((Button)v).setSelected(true);
 	}
 

@@ -4,18 +4,18 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 import br.com.sevencode.android.feia2014.db.DaoMaster;
 import br.com.sevencode.android.feia2014.db.DaoMaster.DevOpenHelper;
 import br.com.sevencode.android.feia2014.db.DaoSession;
@@ -24,6 +24,7 @@ import br.com.sevencode.android.feia2014.db.EventDao;
 import br.com.sevencode.android.feia2014.db.MyEventDao;
 import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
 import br.com.sevencode.android.feia2014.task.LoadEventTask;
+import br.com.sevencode.android.feia2014.util.TypefaceSpan;
 
 
 public class MainActivity extends Activity
@@ -92,27 +93,35 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         
+        //eventDao.deleteAll();
+        
         List<Event> events = eventDao.queryBuilder().list();
         
         if(events == null || events.size() == 0){
         	new LoadEventTask(this).execute();
         }
+        
+//        int titleId = getResources().getIdentifier("action_bar_title", "id",
+//                "android");
+//        TextView yourTextView = (TextView) findViewById(titleId);
+//        Typeface font = Typeface.createFromAsset(this.getAssets(), "fonts/GeosansLight.ttf");
+//        yourTextView.setTypeface(font);
     }
     
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-    	// TODO Auto-generated method stub
-    	super.onRestoreInstanceState(savedInstanceState);
-    	//menuSelected = savedInstanceState.getInt("menuSelected");
-    	goToFragment(getFragmentByPosition(menuSelected));
-    }
-    
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-    	// TODO Auto-generated method stub
-    	super.onSaveInstanceState(outState);
-    	outState.putInt("menuSelected", menuSelected);
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//    	// TODO Auto-generated method stub
+//    	super.onRestoreInstanceState(savedInstanceState);
+//    	//menuSelected = savedInstanceState.getInt("menuSelected");
+//    	goToFragment(getFragmentByPosition(menuSelected));
+//    }
+//    
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//    	// TODO Auto-generated method stub
+//    	super.onSaveInstanceState(outState);
+//    	outState.putInt("menuSelected", menuSelected);
+//    }
     
     public void saveEvents(List<Event> events){
     	//eventDao.insertInTx(events);
@@ -125,20 +134,41 @@ public class MainActivity extends Activity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
-    }
-
-    public void goToFragment(BaseFragment fragment) {
-        // update the main content by replacing fragments
+    	BaseFragment fragment = getFragmentByPosition(position);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
-        
-        this.menuSelected = getPositionByFragment(fragment);
+    }
+    
+    @Override
+    public void setTitle(CharSequence title) {
+    	// TODO Auto-generated method stub
+    	super.setTitle(title);
+    	
+    	SpannableString s = new SpannableString(title);
+    	s.setSpan(new TypefaceSpan(this, "GeosansLight.ttf"), 0, s.length(),
+    	        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+    	// Update the action bar title with the TypefaceSpan instance
+    	ActionBar actionBar = getActionBar();
+    	actionBar.setTitle(s);
+    }
+    
+    public void goToEventInfo(Event event) {
+        // update the main content by replacing fragments
+    	
+//    	Intent intent = new Intent(this, EventInfoActivity.class);
+//    	intent.putExtra("event", event);
+//    	startActivity(intent);
+    	menuSelected = -1;
+    	EventInfoFragment fragment = new EventInfoFragment(event);
+    	
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+        		.replace(R.id.container, fragment)
+        		.addToBackStack("info")
+                .commit();
     }
     
     public BaseFragment getFragmentByPosition(int position){
@@ -223,25 +253,12 @@ public class MainActivity extends Activity
     		
 		return position;
     }
-    
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
-    }
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(mTitle);
     }
 
@@ -252,9 +269,9 @@ public class MainActivity extends Activity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
-            return true;
+//            getMenuInflater().inflate(R.menu.main, menu);
+//            restoreActionBar();
+//            return true;
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -271,44 +288,77 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+	public EventDao getEventDao() {
+		return eventDao;
+	}
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
+	public void setEventDao(EventDao eventDao) {
+		this.eventDao = eventDao;
+	}
 
-        public PlaceholderFragment() {
-        }
+	public MyEventDao getMyEventDao() {
+		return myEventDao;
+	}
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+	public void setMyEventDao(MyEventDao myEventDao) {
+		this.myEventDao = myEventDao;
+	}
 
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-    }
+	public int getMenuSelected() {
+		return menuSelected;
+	}
+
+	public void setMenuSelected(int menuSelected) {
+		this.menuSelected = menuSelected;
+	}
+
+	public NavigationDrawerFragment getNavigationDrawerFragment() {
+		return mNavigationDrawerFragment;
+	}
+
+	public void setNavigationDrawerFragment(
+			NavigationDrawerFragment mNavigationDrawerFragment) {
+		this.mNavigationDrawerFragment = mNavigationDrawerFragment;
+	}
+
+//    /**
+//     * A placeholder fragment containing a simple view.
+//     */
+//   / public static class PlaceholderFragment extends Fragment {
+//        /**
+//         * The fragment argument representing the section number for this
+//         * fragment.
+//         */
+//        private static final String ARG_SECTION_NUMBER = "section_number";
+//
+//        /**
+//         * Returns a new instance of this fragment for the given section
+//         * number.
+//         */
+//        public static PlaceholderFragment newInstance(int sectionNumber) {
+//            PlaceholderFragment fragment = new PlaceholderFragment();
+//            Bundle args = new Bundle();
+//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+//            fragment.setArguments(args);
+//            return fragment;
+//        }
+//
+//        public PlaceholderFragment() {
+//        }
+//
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                Bundle savedInstanceState) {
+//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+//            return rootView;
+//        }
+//
+//        @Override
+//        public void onAttach(Activity activity) {
+//            super.onAttach(activity);
+//            ((MainActivity) activity).onSectionAttached(
+//                    getArguments().getInt(ARG_SECTION_NUMBER));
+//        }
+//    }
 
 }

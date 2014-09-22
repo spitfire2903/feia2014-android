@@ -75,6 +75,7 @@
                 android:id="@+id/btnMap"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@android:color/transparent"
                 android:gravity="left"
                 android:padding="10dp"

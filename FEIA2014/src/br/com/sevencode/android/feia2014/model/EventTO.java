@@ -4,12 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 
-@DatabaseTable(tableName = "events")
 public class EventTO implements Serializable {
 
 	public static enum EventType{
@@ -34,12 +30,30 @@ public class EventTO implements Serializable {
 			return et;
 		}
 		
+		public int intValue(){
+			int result = 0;
+			
+			switch (this) {
+			case WORKSHOP:
+				result = 0;
+				break;
+			case EXHIBITION:
+				result = 1;
+				break;
+			case PARTY:
+				result = 2;
+				break;
+			}
+			
+			return result;
+		}
+		
 	}
 	
 	public static enum EventCategory{
 		DANCING, MUSIC, VISUAL_ARTS, PERFORMING_ARTS, MEDIALOGY, GENERAL;
 		
-		public EventCategory getEventCategory(int value){
+		public static EventCategory getEventCategory(int value){
 			EventCategory et = null;
 			
 			switch(value){
@@ -94,6 +108,33 @@ public class EventTO implements Serializable {
 			return description;
 		}
 		
+		public int intValue(){
+			int result = 0;
+			
+			switch (this) {
+			case DANCING:
+				result = 0;
+				break;
+			case MUSIC:
+				result = 1;
+				break;
+			case VISUAL_ARTS:
+				result = 2;
+				break;
+			case PERFORMING_ARTS:
+				result = 3;
+				break;
+			case MEDIALOGY:
+				result = 4;
+				break;
+			case GENERAL:
+				result = 5;
+				break;
+			}
+			
+			return result;
+		}
+		
 	}
 	
 	/**
@@ -102,34 +143,34 @@ public class EventTO implements Serializable {
 	private static final long serialVersionUID = -1127105278706424404L;
 	
 	
-	@DatabaseField(id=true)
+
 	private int eventId;
 	
-	@DatabaseField
+
 	private String name;
 	
-	@DatabaseField
+
 	private EventCategory category;
 	
-	@DatabaseField
+	
 	private EventType type;
 	
-	@DatabaseField
+	
 	private String author;
 	
-	@DatabaseField
+	
 	private int duration;
 	
-	@DatabaseField
+	
 	private Date date;
 	
-	@DatabaseField
+	
 	private List<Date> dateArray;
 	
-	@DatabaseField(dataType=DataType.LONG_STRING)
+
 	private String description;
 	
-	@DatabaseField
+	
 	private String placeData;
 	
 	public EventTO() {

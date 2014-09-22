@@ -7,27 +7,19 @@
     android:orientation="vertical" >
 
     <br.com.sevencode.android.feia2014.components.SCTextView
-        android:id="@+id/workshopName"
+        android:id="@+id/partyName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:lines="1"
         android:textSize="20sp"
         android:padding="10dp"
         android:textColor="@android:color/white" />
-  <br.com.sevencode.android.feia2014.components.SCTextView
-        android:id="@+id/workshopAuthor"
+
+    <br.com.sevencode.android.feia2014.components.SCTextView
+        android:id="@+id/partyDate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
-    <br.com.sevencode.android.feia2014.components.SCTextView
-        android:id="@+id/workshopDate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textColor="@android:color/white"

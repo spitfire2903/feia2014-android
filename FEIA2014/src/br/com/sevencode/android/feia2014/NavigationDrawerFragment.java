@@ -120,18 +120,31 @@ public class NavigationDrawerFragment extends Fragment {
         mWorkshopMusic = (SCButton)view.findViewById(R.id.btnWorkshopMusic);
         mWorkshopMedialogy = (SCButton)view.findViewById(R.id.btnWorkshopMedialogy);
  
-        mMyCalendar.setOnClickListener(new MenuOnClickListener(this, new CalendarFragment()));
-        mExhibition.setOnClickListener(new MenuOnClickListener(this, new ExhibitionFragment()));
-        mParty.setOnClickListener(new MenuOnClickListener(this, new PartyFragment()));
-        mPartner.setOnClickListener(new MenuOnClickListener(this, new PartnerFragment()));
+        mMyCalendar.setOnClickListener(new MenuOnClickListener(this, 0));
+        mExhibition.setOnClickListener(new MenuOnClickListener(this, 1));
+        mParty.setOnClickListener(new MenuOnClickListener(this, 2));
+        mPartner.setOnClickListener(new MenuOnClickListener(this, 3));
         //mMap.setOnClickListener(new MenuOnClickListener(this, new Map()));
-        mWorkshopGeneral.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.GENERAL)));        
-        mWorkshopVisualArts.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.VISUAL_ARTS)));        
-        mWorkshopPerformingArts.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.PERFORMING_ARTS)));        
-        mWorkshopDancing.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.DANCING)));        
-        mWorkshopMusic.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.MUSIC)));        
-        mWorkshopMedialogy.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.MEDIALOGY)));        
-       
+        mWorkshopGeneral.setOnClickListener(new MenuOnClickListener(this, 5));        
+        mWorkshopVisualArts.setOnClickListener(new MenuOnClickListener(this, 6));        
+        mWorkshopPerformingArts.setOnClickListener(new MenuOnClickListener(this, 7));        
+        mWorkshopDancing.setOnClickListener(new MenuOnClickListener(this, 8));        
+        mWorkshopMusic.setOnClickListener(new MenuOnClickListener(this, 9));        
+        mWorkshopMedialogy.setOnClickListener(new MenuOnClickListener(this, 10));        
+  
+        
+//        mMyCalendar.setOnClickListener(new MenuOnClickListener(this, new CalendarFragment()));
+//        mExhibition.setOnClickListener(new MenuOnClickListener(this, new ExhibitionFragment()));
+//        mParty.setOnClickListener(new MenuOnClickListener(this, new PartyFragment()));
+//        mPartner.setOnClickListener(new MenuOnClickListener(this, new PartnerFragment()));
+//        //mMap.setOnClickListener(new MenuOnClickListener(this, new Map()));
+//        mWorkshopGeneral.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.GENERAL)));        
+//        mWorkshopVisualArts.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.VISUAL_ARTS)));        
+//        mWorkshopPerformingArts.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.PERFORMING_ARTS)));        
+//        mWorkshopDancing.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.DANCING)));        
+//        mWorkshopMusic.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.MUSIC)));        
+//        mWorkshopMedialogy.setOnClickListener(new MenuOnClickListener(this, new WorkshopListFragment(EventCategory.MEDIALOGY)));        
+
     	/*
         mDrawerListView = (ListView) view.findViewById(R.id.menuList);//.findViewById(R.id.menuListView);//.findViewById(R.id.menuListView);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -232,11 +245,11 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int position) {
+    public void selectItem(int position) {
         mCurrentSelectedPosition = position;
-        if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(position, true);
-        }
+//        if (mDrawerListView != null) {
+//            mDrawerListView.setItemChecked(position, true);
+//        }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_type">
+        <item>Todos</item>
+        <item>Dança</item>
+        <item>Música</item>
+        <item>Artes Visuais</item>
+        <item>Artes Cênicas</item>
+        <item>Midialogia</item>
+    </string-array>
+</resources>

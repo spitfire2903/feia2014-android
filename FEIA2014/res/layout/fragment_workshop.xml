@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/redBrownColor"
     android:orientation="vertical" >
-    
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:alpha="0.3"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_logo_feia_rosa" />
+
+    <GridView
+        android:id="@+id/workshopListGrid"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="20dp"
+        android:columnWidth="300dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" />
+
+</RelativeLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -16,7 +17,7 @@
             android:layout_height="fill_parent"
             android:alpha="0.3"
             android:scaleType="centerCrop"
-            android:src="@drawable/bkg_cabelos_branco" />
+            android:src="@drawable/bkg_cabelos_branco2" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -25,6 +26,7 @@
             android:orientation="vertical" >
 
             <br.com.sevencode.android.feia2014.components.SCTextView
+                android:id="@+id/eventInfoName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
@@ -32,18 +34,22 @@
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
                 android:text="Título"
+                android:textColor="@android:color/white"
                 android:textSize="22sp" />
 
             <br.com.sevencode.android.feia2014.components.SCTextView
+                android:id="@+id/eventInfoDate"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="Lugar - Data / Hora" />
+                android:text="Lugar - Data / Hora"
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>
 
     <br.com.sevencode.android.feia2014.components.SCTextView
+        android:id="@+id/eventInfoAuthor"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
@@ -62,9 +68,11 @@
             android:layout_height="wrap_content" >
 
             <br.com.sevencode.android.feia2014.components.SCTextView
+                android:id="@+id/eventInfoDescription"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Descrição" />
+                android:text="Descrição"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
