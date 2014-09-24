@@ -135,6 +135,8 @@ public class MainActivity extends Activity
     public void setTitle(CharSequence title) {
     	super.setTitle(title);
     	
+    	mTitle = title;
+    	
     	SpannableString s = new SpannableString(title);
     	s.setSpan(new TypefaceSpan(this, "GeosansLight.ttf"), 0, s.length(),
     	        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

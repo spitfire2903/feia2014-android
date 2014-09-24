@@ -47,7 +47,7 @@ public class WorkshopListFragment extends BaseFragment {
 		});
 
 		GetEventTask task = new GetEventTask(this, selectedCategory, EventType.WORKSHOP);
-		//task.execute();
+		task.execute();
 
 		return rootView;
 	}
