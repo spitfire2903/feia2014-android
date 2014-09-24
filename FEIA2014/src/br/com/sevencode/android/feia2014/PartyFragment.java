@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import br.com.sevencode.android.feia2014.adapter.PartyAdapter;
-import br.com.sevencode.android.feia2014.model.EventTO.EventType;
+import br.com.sevencode.android.feia2014.db.Event.EventType;
 import br.com.sevencode.android.feia2014.task.GetEventTask;
 
 public class PartyFragment extends BaseFragment {
@@ -24,8 +24,7 @@ public class PartyFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_party, container, false);
-		getActivity().setTitle("Noites FEIA");
-
+		
 		partyList = (GridView) rootView.findViewById(R.id.partyListGrid);
 		partyList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -41,6 +40,13 @@ public class PartyFragment extends BaseFragment {
 		task.execute();
 		
 		return rootView;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		getMainActivity().setTitle("Noites FEIA");
+
 	}
 
 //	@Override

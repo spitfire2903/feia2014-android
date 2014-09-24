@@ -11,12 +11,12 @@ import br.com.sevencode.android.feia2014.db.DaoMaster;
 import br.com.sevencode.android.feia2014.db.DaoMaster.DevOpenHelper;
 import br.com.sevencode.android.feia2014.db.DaoSession;
 import br.com.sevencode.android.feia2014.db.Event;
+import br.com.sevencode.android.feia2014.db.Event.EventCategory;
+import br.com.sevencode.android.feia2014.db.Event.EventType;
 import br.com.sevencode.android.feia2014.db.EventDao;
 import br.com.sevencode.android.feia2014.db.EventDao.Properties;
 import br.com.sevencode.android.feia2014.db.MyEvent;
 import br.com.sevencode.android.feia2014.db.MyEventDao;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
-import br.com.sevencode.android.feia2014.model.EventTO.EventType;
 import de.greenrobot.dao.query.QueryBuilder;
 
 public class GetMyEventTask extends AsyncTask<Void, Void, Void> {

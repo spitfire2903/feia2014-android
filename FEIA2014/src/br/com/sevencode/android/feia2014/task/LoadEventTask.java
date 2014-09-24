@@ -21,21 +21,18 @@ public class LoadEventTask extends AsyncTask<Void, Void, Void> {
 	private List<Event> events = null;
 
 	public LoadEventTask(MainActivity activity) {
-		// TODO Auto-generated constructor stub
 		this.parent = activity;
 	}
 
 	@Override
 	protected void onPreExecute() {
-		// TODO Auto-generated method stub
 		super.onPreExecute();
 		events = new ArrayList<Event>();
-		parent.showThrobber();
+		//parent.showThrobber();
 	}
 
 	@Override
 	protected Void doInBackground(Void... arg0) {
-		// TODO Auto-generated method stub
 		String json = loadJSONFromAsset();
 		readJson(json);
 
@@ -44,7 +41,6 @@ public class LoadEventTask extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected void onPostExecute(Void result) {
-		// TODO Auto-generated method stub
 		super.onPostExecute(result);
 
 		parent.saveEvents(events);

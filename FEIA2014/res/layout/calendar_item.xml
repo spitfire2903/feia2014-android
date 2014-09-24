@@ -36,7 +36,7 @@
 			android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
         
         <br.com.sevencode.android.feia2014.components.SCTextView
             android:id="@+id/eventName"

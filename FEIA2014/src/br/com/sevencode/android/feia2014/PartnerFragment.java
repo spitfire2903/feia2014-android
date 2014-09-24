@@ -14,7 +14,14 @@ public class PartnerFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_partner, container, false);
-        getActivity().setTitle("Parceiros");
+        
         return rootView;
     }
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		getMainActivity().setTitle("Parceiros");
+	}
 }

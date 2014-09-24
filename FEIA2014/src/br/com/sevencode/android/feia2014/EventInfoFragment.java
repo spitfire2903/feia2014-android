@@ -17,11 +17,11 @@ import br.com.sevencode.android.feia2014.db.DaoMaster;
 import br.com.sevencode.android.feia2014.db.DaoMaster.DevOpenHelper;
 import br.com.sevencode.android.feia2014.db.DaoSession;
 import br.com.sevencode.android.feia2014.db.Event;
+import br.com.sevencode.android.feia2014.db.Event.EventCategory;
+import br.com.sevencode.android.feia2014.db.Event.EventType;
 import br.com.sevencode.android.feia2014.db.MyEvent;
 import br.com.sevencode.android.feia2014.db.MyEventDao;
 import br.com.sevencode.android.feia2014.db.MyEventDao.Properties;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
-import br.com.sevencode.android.feia2014.model.EventTO.EventType;
 
 public class EventInfoFragment extends BaseFragment {
 	private Event event;
@@ -170,7 +170,7 @@ public class EventInfoFragment extends BaseFragment {
 
 		eventDateStr = eventDateStr.substring(0, eventDateStr.lastIndexOf(" /"));
 
-		eventDate.setText(event.getPlaceData()+" - "+eventDateStr);
+		eventDate.setText(event.getPlaceData()+'\n'+eventDateStr);
 
 		return rootView;
 	}
@@ -195,8 +195,6 @@ public class EventInfoFragment extends BaseFragment {
 	public Boolean isEventFavorited(){
 		Boolean isFavorited = false;
 		List<MyEvent> events = null; 
-		
-		
 
 		events = myEventDao.queryBuilder().where(Properties.EventId.eq(event.getId())).list();
 

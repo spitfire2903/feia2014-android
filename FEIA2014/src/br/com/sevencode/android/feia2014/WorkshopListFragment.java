@@ -9,8 +9,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import br.com.sevencode.android.feia2014.adapter.WorkshopAdapter;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
-import br.com.sevencode.android.feia2014.model.EventTO.EventType;
+import br.com.sevencode.android.feia2014.db.Event.EventCategory;
+import br.com.sevencode.android.feia2014.db.Event.EventType;
 import br.com.sevencode.android.feia2014.task.GetEventTask;
 
 public class WorkshopListFragment extends BaseFragment {
@@ -34,9 +34,8 @@ public class WorkshopListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_workshop, container, false);
-        getActivity().setTitle("Oficina "+selectedCategory.getEventCategoryDescription());
-;
-		workshopGridView = (GridView) rootView.findViewById(R.id.workshopListGrid);
+		
+        workshopGridView = (GridView) rootView.findViewById(R.id.workshopListGrid);
 		workshopGridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -48,11 +47,18 @@ public class WorkshopListFragment extends BaseFragment {
 		});
 
 		GetEventTask task = new GetEventTask(this, selectedCategory, EventType.WORKSHOP);
-		task.execute();
+		//task.execute();
 
 		return rootView;
 	}
 
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	
+    	getMainActivity().setTitle("Oficina "+selectedCategory.getEventCategoryDescription());
+    }
+    
 	@Override
 	public void setAdapter(Context context) {
 		super.setAdapter(context);

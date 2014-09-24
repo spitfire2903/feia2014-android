@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.sevencode.android.feia2014.adapter.CalendarAdapter;
 import br.com.sevencode.android.feia2014.db.Event;
 import br.com.sevencode.android.feia2014.task.GetMyEventTask;
@@ -26,7 +26,6 @@ public class CalendarFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-        getActivity().setTitle("Meu Calendário");
         
         calendarList = (ListView) rootView.findViewById(R.id.calendarList);
         calendarList.setOnItemClickListener(new OnItemClickListener() {
@@ -42,6 +41,13 @@ public class CalendarFragment extends BaseFragment {
         task.execute();
         
         return rootView;
+    }
+    
+    @Override
+    public void onStart() {
+       	super.onStart();
+       	
+       	getMainActivity().setTitle("Meu Calendário");
     }
     
     @Override

@@ -4,17 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import br.com.sevencode.android.feia2014.R;
 import br.com.sevencode.android.feia2014.components.SCTextView;
 import br.com.sevencode.android.feia2014.db.Event;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
-import br.com.sevencode.android.feia2014.model.EventTO.EventType;
 
 public class WorkshopAdapter extends ArrayAdapter<Event> {
 	private Context context;

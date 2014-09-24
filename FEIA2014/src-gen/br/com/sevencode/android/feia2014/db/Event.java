@@ -134,4 +134,133 @@ public class Event implements Serializable{
         this.description = description;
     }
 
+    
+	public static enum EventType{
+		WORKSHOP, EXHIBITION, PARTY;
+		
+		public EventType getEventType(int value){
+			EventType et = null;
+			
+			switch(value){
+			case 0:
+				et = WORKSHOP;
+				break;
+			case 1:
+				et = EXHIBITION;
+				break;
+			case 2:
+				et = PARTY;
+				break;
+			
+			}
+			
+			return et;
+		}
+		
+		public int intValue(){
+			int result = 0;
+			
+			switch (this) {
+			case WORKSHOP:
+				result = 0;
+				break;
+			case EXHIBITION:
+				result = 1;
+				break;
+			case PARTY:
+				result = 2;
+				break;
+			}
+			
+			return result;
+		}
+		
+	}
+	
+	public static enum EventCategory{
+		DANCING, MUSIC, VISUAL_ARTS, PERFORMING_ARTS, MEDIALOGY, GENERAL;
+		
+		public static EventCategory getEventCategory(int value){
+			EventCategory et = null;
+			
+			switch(value){
+			case 0:
+				et = DANCING;
+				break;
+			case 1:
+				et = MUSIC;
+				break;
+			case 2:
+				et = VISUAL_ARTS;
+				break;
+			case 3:
+				et = PERFORMING_ARTS;
+				break;
+			case 4:
+				et = MEDIALOGY;
+				break;
+			case 5:
+				et = GENERAL;
+				break;
+			
+			}
+			
+			return et;
+		}
+		
+		public String getEventCategoryDescription(){
+			String description = null;
+			
+			switch (this) {
+			case GENERAL:
+				description = "Interdisciplinar";
+				break;
+			case VISUAL_ARTS:
+				description = "Artes Visuais";
+				break;
+			case PERFORMING_ARTS:
+				description = "Artes Cênicas";
+				break;
+			case DANCING:
+				description = "Dança";
+				break;
+			case MUSIC:
+				description = "Música";
+				break;
+			case MEDIALOGY:
+				description = "Midialogia";
+				break;
+			}
+			
+			return description;
+		}
+		
+		public int intValue(){
+			int result = 0;
+			
+			switch (this) {
+			case DANCING:
+				result = 0;
+				break;
+			case MUSIC:
+				result = 1;
+				break;
+			case VISUAL_ARTS:
+				result = 2;
+				break;
+			case PERFORMING_ARTS:
+				result = 3;
+				break;
+			case MEDIALOGY:
+				result = 4;
+				break;
+			case GENERAL:
+				result = 5;
+				break;
+			}
+			
+			return result;
+		}
+		
+	}
 }

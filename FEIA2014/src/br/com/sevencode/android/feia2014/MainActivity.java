@@ -5,24 +5,26 @@ import java.util.List;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import br.com.sevencode.android.feia2014.db.DaoMaster;
 import br.com.sevencode.android.feia2014.db.DaoMaster.DevOpenHelper;
 import br.com.sevencode.android.feia2014.db.DaoSession;
 import br.com.sevencode.android.feia2014.db.Event;
+import br.com.sevencode.android.feia2014.db.Event.EventCategory;
 import br.com.sevencode.android.feia2014.db.EventDao;
+import br.com.sevencode.android.feia2014.db.EventDao.Properties;
 import br.com.sevencode.android.feia2014.db.MyEventDao;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
 import br.com.sevencode.android.feia2014.task.LoadEventTask;
 import br.com.sevencode.android.feia2014.util.TypefaceSpan;
 
@@ -75,11 +77,14 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        showThrobber();
+        
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
         
-
+        setTitle(mTitle);
+        
 		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "feia-db",
 				null);
 		db = helper.getWritableDatabase();
@@ -99,30 +104,15 @@ public class MainActivity extends Activity
         
         if(events == null || events.size() == 0){
         	new LoadEventTask(this).execute();
+        } else{
+        	//makeChanges();
+        	hideThrobber();
         }
         
-//        int titleId = getResources().getIdentifier("action_bar_title", "id",
-//                "android");
-//        TextView yourTextView = (TextView) findViewById(titleId);
-//        Typeface font = Typeface.createFromAsset(this.getAssets(), "fonts/GeosansLight.ttf");
-//        yourTextView.setTypeface(font);
+        //showNotifications();
+        
     }
-    
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//    	// TODO Auto-generated method stub
-//    	super.onRestoreInstanceState(savedInstanceState);
-//    	//menuSelected = savedInstanceState.getInt("menuSelected");
-//    	goToFragment(getFragmentByPosition(menuSelected));
-//    }
-//    
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//    	// TODO Auto-generated method stub
-//    	super.onSaveInstanceState(outState);
-//    	outState.putInt("menuSelected", menuSelected);
-//    }
-    
+ 
     public void saveEvents(List<Event> events){
     	//eventDao.insertInTx(events);
     	for (Event object : events) {
@@ -143,7 +133,6 @@ public class MainActivity extends Activity
     
     @Override
     public void setTitle(CharSequence title) {
-    	// TODO Auto-generated method stub
     	super.setTitle(title);
     	
     	SpannableString s = new SpannableString(title);
@@ -321,44 +310,88 @@ public class MainActivity extends Activity
 		this.mNavigationDrawerFragment = mNavigationDrawerFragment;
 	}
 
-//    /**
-//     * A placeholder fragment containing a simple view.
-//     */
-//   / public static class PlaceholderFragment extends Fragment {
-//        /**
-//         * The fragment argument representing the section number for this
-//         * fragment.
-//         */
-//        private static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         */
-//        public static PlaceholderFragment newInstance(int sectionNumber) {
-//            PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//            fragment.setArguments(args);
-//            return fragment;
-//        }
-//
-//        public PlaceholderFragment() {
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-//            return rootView;
-//        }
-//
-//        @Override
-//        public void onAttach(Activity activity) {
-//            super.onAttach(activity);
-//            ((MainActivity) activity).onSectionAttached(
-//                    getArguments().getInt(ARG_SECTION_NUMBER));
-//        }
-//    }
+	public void showNotifications(){
+		NotificationManager mNotificationManager = null;
+		NotificationCompat.Builder mNotifyBuilder = null;
+		int numMessages = 0;
+		
+		mNotificationManager =
+		        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		// Sets an ID for the notification, so it can be updated
+		int notifyID = 1;
+		mNotifyBuilder = new NotificationCompat.Builder(this)
+		    .setContentTitle("O Evento vai começar")
+		    .setContentText("Você tem novas notificações!")
+		    .setSmallIcon(R.drawable.ic_notification_small);
+		numMessages = 0;
+		
+		mNotifyBuilder.setContentText("current Texto");//.setNumber(++numMessages);
+
+		mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+	}
+	
+	public void makeChanges(){
+		Event event = null;
+		List<Event> events = null;
+		
+		events = eventDao.queryBuilder().where(Properties.EventId.eq(93)).list();
+		
+		// Altera João Bosco para apresentações ao inves de noite FEIA
+		for (Event e : events) {
+			if(e.getName().contains("Bosco")){
+				e.setType(1);
+				e.setCategory(1);
+				e.setName(e.getName().substring(e.getName().indexOf("João Bosco")));
+		
+				eventDao.update(e);
+			}
+		}
+		
+		events = eventDao.queryBuilder().where(Properties.EventId.eq(83)).list();
+		
+		// Remove Duo Catrumano 
+		for (Event e : events) {
+			if(e.getName().contains("Catrumano")){
+				eventDao.delete(e);
+			}
+		}
+		
+		events = eventDao.queryBuilder().where(Properties.EventId.eq(85)).list();
+		
+		// Altera lugar do Meia duzia de 3 ou 4
+		for (Event e : events) {
+			if(e.getName().contains("3 ou 4")){
+				e.setPlaceData("Vão do PB");
+				
+				eventDao.update(e);
+			}
+		}
+		
+		events = eventDao.queryBuilder().where(Properties.EventId.eq(90)).list();
+		
+		// Altera noite feia do padre do balão para galo de briga
+		for (Event e : events) {
+			if(e.getName().contains("Padre")){
+				e.setName("Noite FEIA - Galo de Briga");
+				e.setDescription("O grupo Galos de Briga se propõe a compartilhar um " +
+						"repertório vasto que abrange várias vertentes do samba, " +
+						"valorizando tanto a formação tradicional de instrumentos " +
+						"que compõem uma clássica roda de samba como uma " +
+						"instrumentação mais moderna. De Nelson Cavaquinho, Cartola, " +
+						"Paulinho da Viola a sambistas mais recentes como compositores " +
+						"do Cacique de Ramos e outros contemporâneos, o repertório " +
+						"abarca de maneira significativa a trajetória pela qual esse " +
+						"estilo musical se consolidou e vem se ressignificando. O " +
+						"grupo é composto por músicos amigos que estudaram e se " +
+						"conheceram na Unicamp e em projetos culturais que têm como " +
+						"norte principal o samba, buscando não somente a execução " +
+						"mecânica da música, mas sim o engrandecimento deste em sua " +
+						"expressão no âmbito sócio-cultural.");
+				
+				eventDao.update(e);
+			}
+		}
+		
+	}
 
 }

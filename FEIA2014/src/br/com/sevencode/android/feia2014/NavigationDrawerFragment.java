@@ -16,14 +16,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import br.com.sevencode.android.feia2014.components.SCButton;
 import br.com.sevencode.android.feia2014.listener.MenuOnClickListener;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

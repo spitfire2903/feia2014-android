@@ -13,8 +13,7 @@ import android.widget.ImageView;
 import br.com.sevencode.android.feia2014.R;
 import br.com.sevencode.android.feia2014.components.SCTextView;
 import br.com.sevencode.android.feia2014.db.Event;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
-import br.com.sevencode.android.feia2014.model.EventTO.EventType;
+import br.com.sevencode.android.feia2014.db.Event.EventCategory;
 
 public class ExhibitionAdapter extends ArrayAdapter<Event> {
 	private Context context;
@@ -43,12 +42,17 @@ public class ExhibitionAdapter extends ArrayAdapter<Event> {
 		SCTextView name = (SCTextView) exhibitionRow.findViewById(R.id.exhibitionName);
 		SCTextView date = (SCTextView) exhibitionRow.findViewById(R.id.exhibitionDate);
 		ImageView icon = (ImageView) exhibitionRow.findViewById(R.id.exhibitionIcon);
-		//		for (String dateStr : e.getDateArray().split("|")) {
-		//			dateText += "";
-		//		}
+
+
+		for (String dateStr : e.getDateArray().split("\\|")) {
+
+			dateText += (dateStr+" / ");
+		}
+
+		dateText = dateText.substring(0, dateText.lastIndexOf(" /"));
 
 		name.setText(e.getName());
-		date.setText(sdf.format(e.getDate()));
+		date.setText(dateText);
 		icon.setImageDrawable(getEventIcon(e));
 
 		return exhibitionRow;

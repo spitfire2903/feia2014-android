@@ -751,7 +751,7 @@
           },
           {
           "eventId": 65,
-          "name": "Dutty Free",
+          "name": "Duty Free",
           "type": 1,
           "category": 3,
           "date": ["26/09/2014 20:00"],
@@ -772,7 +772,7 @@
           "site": ""
           },
           {
-          "eventId": 64,
+          "eventId": 94,
           "name": "Café com Queijo",
           "type": 1,
           "category": 3,
@@ -783,7 +783,7 @@
           "site": ""
           },
           {
-          "eventId": 65,
+          "eventId": 95,
           "name": "II MOSTRA LIVRE DE ARTES VISUAIS FEIA",
           "type": 1,
           "category": 2,
@@ -794,7 +794,7 @@
           "site": ""
           },
           {
-          "eventId": 66,
+          "eventId": 96,
           "name": "Mesa Redonda: Livros de Artista/Publicação/Expografia",
           "type": 1,
           "category": 2,
@@ -980,17 +980,6 @@
           "site": ""
           },
           {
-          "eventId": 83,
-          "name": "Duo Catrumano - Instrumental de Violas Caipiras",
-          "type": 1,
-          "category": 1,
-          "date": ["25/09/2014 14:00"],
-          "author":"",
-          "shortDescription": "O Duo Catrumano – Instrumental de Violas Caipiras - dedica-se a explorar as possibilidades deste instrumento tão brasileiro e, ao mesmo tempo, tão universal. Valorizando os ritmos e as ricas harmonias do cancioneiro brasileiro, o Duo propõem-se a dar novas roupagens à música brasileira, buscando na combinação das duas violas caipiras sua vasta diversidade de texturas e nuances.",
-          "placeData": "Sala de Cinema da Casa do Lago",
-          "site": ""
-          },
-          {
           "eventId": 84,
           "name": "Damián Birbrier Quarteto",
           "type": 1,
@@ -1009,7 +998,7 @@
           "date": ["26/09/2014 12:30"],
           "author":"",
           "shortDescription": "Com 11 anos de carreira, o grupo paulistano 1/2 Dúzia de 3 ou 4 apresenta o seu terceiro álbum, \"Tem Muito Disso que Cê Tá Falando\". Nesse trabalho, além de um repertório renovado por canções inéditas, a banda fortemente influenciada pela vanguarda paulista traz momentos mais dançantes em um show cheio de climas e imagens. O álbum pode ser baixado gratuitamente no site oficial do grupo.",
-          "placeData": "Teatro de Arena do Ciclo Básico",
+          "placeData": "Vão do PB",
           "site": ""
           },
           {
@@ -1058,12 +1047,12 @@
           },
           {
           "eventId": 90,
-          "name": "Noite FEIA - Padre dos Balões",
+          "name": "Noite FEIA - Galo de Briga",
           "type": 2,
           "category": 5,
           "date": ["24/09/2014 21:00"],
           "author":"",
-          "shortDescription": "As guitarras distorcidas abriram espaço para outros ritmos, como o afrobeat, o frevo, o samba e o funk carioca, mas a irreverência e a levada dançante permanecem pulsantes. Após mais de um ano do seu primeiro lançamento, O Padre dos Balões apresenta novo EP. São quatro faixas que traduzem a curiosidade do quarteto em absorver novas sonoridades, agregando energia e suingue ao rock psicodélico da banda.",
+          "shortDescription": "O grupo Galos de Briga se propõe a compartilhar um repertório vasto que abrange várias vertentes do samba, valorizando tanto a formação tradicional de instrumentos que compõem uma clássica roda de samba como uma instrumentação mais moderna. De Nelson Cavaquinho, Cartola, Paulinho da Viola a sambistas mais recentes como compositores do Cacique de Ramos e outros contemporâneos, o repertório abarca de maneira significativa a trajetória pela qual esse estilo musical se consolidou e vem se ressignificando. O grupo é composto por músicos amigos que estudaram e se conheceram na Unicamp e em projetos culturais que têm como norte principal o samba, buscando não somente a execução mecânica da música, mas sim o engrandecimento deste em sua expressão no âmbito sócio-cultural.",
           "placeData": "Echos Studio Bar",
           "site": ""
           },
@@ -1091,9 +1080,9 @@
           },
           {
           "eventId": 93,
-          "name": "Noite FEIA - João Bosco e Banda - Quarenta anos depois",
-          "type": 2,
-          "category": 5,
+          "name": "João Bosco e Banda - Quarenta anos depois",
+          "type": 1,
+          "category": 1,
           "date": ["27/09/2014 18:00"],
           "author":"",
           "shortDescription": "Desde a sua estreia, sob a benção jobiniana, num disco compacto que tinha \"Agnus sei\" de um lado e \"Águas de março\" de outro, João Bosco está completando 40 anos de carreira. Como no poema de Drummond, pode--‐se dizer que ele atinge a marca na seguinte situação: \"Quarenta anos e nenhum problema/ resolvido\". Mas muitos problemas colocados, com originalidade e mestria. São esses problemas musicais que ele reúne e aprofunda neses cd e dvd que lança em comemoração à efeméride.",

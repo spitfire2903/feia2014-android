@@ -17,8 +17,8 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import br.com.sevencode.android.feia2014.adapter.CategorySpinnerAdapter;
 import br.com.sevencode.android.feia2014.adapter.ExhibitionAdapter;
-import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
-import br.com.sevencode.android.feia2014.model.EventTO.EventType;
+import br.com.sevencode.android.feia2014.db.Event.EventCategory;
+import br.com.sevencode.android.feia2014.db.Event.EventType;
 import br.com.sevencode.android.feia2014.task.GetEventTask;
 
 public class ExhibitionFragment extends BaseFragment implements OnNavigationListener{
@@ -143,7 +143,6 @@ public class ExhibitionFragment extends BaseFragment implements OnNavigationList
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_exhibition, container, false);
-		getActivity().setTitle("Apresentações");
 
 		exhibitionGridView = (GridView) rootView.findViewById(R.id.exhibitionListGrid);
 		exhibitionGridView.setOnItemClickListener(new OnItemClickListener() {
@@ -162,6 +161,13 @@ public class ExhibitionFragment extends BaseFragment implements OnNavigationList
 		return rootView;
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		getMainActivity().setTitle("Apresentações");
+	}
+	
 	@Override
 	public void setAdapter(Context context) {
 		super.setAdapter(context);
