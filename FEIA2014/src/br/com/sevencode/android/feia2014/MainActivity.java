@@ -162,7 +162,7 @@ public class MainActivity extends Activity
 //    	intent.putExtra("event", event);
 //    	startActivity(intent);
     	menuSelected = -1;
-    	EventInfoFragment fragment = new EventInfoFragment(event);
+    	EventInfoFragment fragment = new EventInfoFragment(event, this);
     	
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -176,37 +176,37 @@ public class MainActivity extends Activity
     	
     	switch (position) {
 		case 0:
-			fragment = new CalendarFragment();
+			fragment = new CalendarFragment(this);
 			break;
 		case 1:
-			fragment = new ExhibitionFragment();
+			fragment = new ExhibitionFragment(this);
 			break;
 		case 2:
-			fragment = new PartyFragment();
+			fragment = new PartyFragment(this);
 			break;
 		case 3:
-			fragment = new PartnerFragment();
+			fragment = new PartnerFragment(this);
 			break;
 		case 4:
 			//fragment = new ma();
 			break;
 		case 5:
-			fragment = new WorkshopListFragment(EventCategory.GENERAL);
+			fragment = new WorkshopListFragment(EventCategory.GENERAL,this);
 			break;
 		case 6:
-			fragment = new WorkshopListFragment(EventCategory.VISUAL_ARTS);
+			fragment = new WorkshopListFragment(EventCategory.VISUAL_ARTS,this);
 			break;
 		case 7:
-			fragment = new WorkshopListFragment(EventCategory.PERFORMING_ARTS);
+			fragment = new WorkshopListFragment(EventCategory.PERFORMING_ARTS,this);
 			break;
 		case 8:
-			fragment = new WorkshopListFragment(EventCategory.DANCING);
+			fragment = new WorkshopListFragment(EventCategory.DANCING,this);
 			break;
 		case 9:
-			fragment = new WorkshopListFragment(EventCategory.MUSIC);
+			fragment = new WorkshopListFragment(EventCategory.MUSIC,this);
 			break;
 		default:
-			fragment = new WorkshopListFragment(EventCategory.MEDIALOGY);
+			fragment = new WorkshopListFragment(EventCategory.MEDIALOGY,this);
 			break;
 		}
     	

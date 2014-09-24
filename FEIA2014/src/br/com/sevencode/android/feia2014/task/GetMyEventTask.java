@@ -87,7 +87,7 @@ public class GetMyEventTask extends AsyncTask<Void, Void, Void> {
 		super.onPostExecute(result);
 
 		mFragment.setEvents(mEvents);
-		mFragment.setAdapter();
+		mFragment.setAdapter(mActivity);
 		mActivity.hideThrobber();
 	}
 

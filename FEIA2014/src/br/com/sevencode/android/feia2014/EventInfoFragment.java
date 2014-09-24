@@ -2,23 +2,16 @@ package br.com.sevencode.android.feia2014;
 
 import java.util.List;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.AttributeSet;
-import android.view.InflateException;
 import android.view.LayoutInflater;
-import android.view.LayoutInflater.Factory;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 import br.com.sevencode.android.feia2014.components.SCTextView;
 import br.com.sevencode.android.feia2014.db.DaoMaster;
 import br.com.sevencode.android.feia2014.db.DaoMaster.DevOpenHelper;
@@ -41,12 +34,13 @@ public class EventInfoFragment extends BaseFragment {
 	private RelativeLayout headerView;
 
 	private SQLiteDatabase db;
-
+	
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
 	private MyEventDao myEventDao;
 
-	public EventInfoFragment(Event event) {
+	public EventInfoFragment(Event event, MainActivity activity) {
+		super(activity);
 		this.event = event;
 	}
 
@@ -57,7 +51,7 @@ public class EventInfoFragment extends BaseFragment {
 		
 		DevOpenHelper helper = null;
 
-		helper = new DaoMaster.DevOpenHelper(getActivity(), "feia-db",
+		helper = new DaoMaster.DevOpenHelper(getMainActivity(), "feia-db",
 				null);
 		db = helper.getWritableDatabase();
 		daoMaster = new DaoMaster(db);
@@ -69,7 +63,7 @@ public class EventInfoFragment extends BaseFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (!((MainActivity)getActivity()).getNavigationDrawerFragment().isDrawerOpen()) {
+        if (!getMainActivity().getNavigationDrawerFragment().isDrawerOpen()) {
         	inflater.inflate(R.menu.event_info, menu);
         	
 //        	getActivity().getLayoutInflater().setFactory(new Factory() {
@@ -109,40 +103,52 @@ public class EventInfoFragment extends BaseFragment {
 
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
-
 		super.onPrepareOptionsMenu(menu);
-		if(isEventFavorited()){
-			menu.getItem(0).setEnabled(false);
-			menu.getItem(0).setTitle(R.string.action_saved);
-			menu.getItem(0).setChecked(true);
+		
+		MenuItem saveItem = null;
+		MenuItem savedItem = null;
+		
+		saveItem = menu.findItem(R.id.action_save);
+		savedItem = menu.findItem(R.id.action_saved);
+		
+		if(saveItem != null && savedItem != null){
+			if(isEventFavorited()){
+				saveItem.setVisible(false);
+				savedItem.setVisible(true);
+			} else{
+				saveItem.setVisible(true);
+				savedItem.setVisible(false);
+			}
 		}
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		boolean result = false;
+		
 		switch (item.getItemId()) {
 		case R.id.action_save:
-			
-			MyEvent myEvent = new MyEvent();
-			myEvent.setEventId(event.getId());
-			myEvent.setEvent(event);
-			
-			myEventDao.insert(myEvent);
-			
-			item.setEnabled(false);
-			item.setTitle(R.string.action_saved);
-			item.setChecked(true);
+			saveFavoriteEvent();
+
+			break;
+		case R.id.action_saved:
+			removeFavoriteEvent();
+
 			break;
 		}
-		return super.onOptionsItemSelected(item);
+		
+		result = super.onOptionsItemSelected(item);
+		
+		getMainActivity().invalidateOptionsMenu();
+		
+		return result;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_info, container, false);
-		getActivity().setTitle(event.getName());
-
+		
 		String eventDateStr = "";
 
 		eventName = (SCTextView)rootView.findViewById(R.id.eventInfoName);
@@ -164,20 +170,52 @@ public class EventInfoFragment extends BaseFragment {
 
 		eventDateStr = eventDateStr.substring(0, eventDateStr.lastIndexOf(" /"));
 
-		eventDate.setText(eventDateStr);
+		eventDate.setText(event.getPlaceData()+" - "+eventDateStr);
 
 		return rootView;
 	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		getMainActivity().setTitle(event.getName());
+	}
 
+	public void saveFavoriteEvent(){
+		MyEvent myEvent = new MyEvent();
+		myEvent.setEventId(event.getId());
+		myEvent.setEvent(event);
+		
+		myEventDao.insert(myEvent);
+		
+		Toast.makeText(getMainActivity(), "O evento foi salvo com sucesso!", Toast.LENGTH_LONG).show();
+	}
+	
 	public Boolean isEventFavorited(){
 		Boolean isFavorited = false;
 		List<MyEvent> events = null; 
+		
+		
 
 		events = myEventDao.queryBuilder().where(Properties.EventId.eq(event.getId())).list();
 
 		isFavorited = (events != null && events.size() > 0 ? true : false);
 
 		return isFavorited;
+	}
+	
+	public void removeFavoriteEvent(){
+		List<MyEvent> events = null; 
+		// MyEvent myEvent = null;
+		
+		events = myEventDao.queryBuilder().where(Properties.EventId.eq(event.getId())).list();
+
+		for (MyEvent myEvent : events) {
+			myEventDao.delete(myEvent);
+		}
+
+		Toast.makeText(getMainActivity(), "Evento removido com sucesso!", Toast.LENGTH_LONG).show();
 	}
 
 	public int getEventColor(){

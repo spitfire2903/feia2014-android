@@ -1,13 +1,13 @@
 package br.com.sevencode.android.feia2014;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
-import br.com.sevencode.android.feia2014.adapter.ExhibitionAdapter;
+import android.widget.GridView;
 import br.com.sevencode.android.feia2014.adapter.WorkshopAdapter;
 import br.com.sevencode.android.feia2014.model.EventTO.EventCategory;
 import br.com.sevencode.android.feia2014.model.EventTO.EventType;
@@ -17,7 +17,8 @@ public class WorkshopListFragment extends BaseFragment {
 	private GridView workshopGridView = null;
 	private EventCategory selectedCategory;
 	
-	public WorkshopListFragment(EventCategory category) {
+	public WorkshopListFragment(EventCategory category, MainActivity activity) {
+		super(activity);
 		selectedCategory = category;
 	}
 
@@ -53,9 +54,9 @@ public class WorkshopListFragment extends BaseFragment {
 	}
 
 	@Override
-	public void setAdapter() {
-		super.setAdapter();
+	public void setAdapter(Context context) {
+		super.setAdapter(context);
 		if(workshopGridView != null)
-			workshopGridView.setAdapter(new WorkshopAdapter(getActivity(), R.layout.workshop_item, getEvents()));
+			workshopGridView.setAdapter(new WorkshopAdapter(context, R.layout.workshop_item, getEvents()));
 	}
 }

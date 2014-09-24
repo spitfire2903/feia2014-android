@@ -1,8 +1,7 @@
 package br.com.sevencode.android.feia2014;
 
 import android.app.ActionBar.OnNavigationListener;
-import android.graphics.Color;
-import android.media.ExifInterface;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -30,8 +28,8 @@ public class ExhibitionFragment extends BaseFragment implements OnNavigationList
 	private static final String[] CATEGORY = new String[] { "Todos",
 		"Dança", "Música", "Artes Visuais", "Artes Cênicas", "Midialogia" };
 
-	public ExhibitionFragment() {
-
+	public ExhibitionFragment(MainActivity activity) {
+		super(activity);
 	}
 
 	@Override
@@ -165,10 +163,10 @@ public class ExhibitionFragment extends BaseFragment implements OnNavigationList
 	}
 
 	@Override
-	public void setAdapter() {
-		super.setAdapter();
+	public void setAdapter(Context context) {
+		super.setAdapter(context);
 		if(exhibitionGridView != null)
-			exhibitionGridView.setAdapter(new ExhibitionAdapter(getActivity(), R.layout.exhibition_item, getEvents()));
+			exhibitionGridView.setAdapter(new ExhibitionAdapter(context, R.layout.exhibition_item, getEvents()));
 	}
 
 	@Override

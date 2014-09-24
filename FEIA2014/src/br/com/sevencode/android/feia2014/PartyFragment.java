@@ -1,7 +1,6 @@
 package br.com.sevencode.android.feia2014;
 
-import java.util.List;
-
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import br.com.sevencode.android.feia2014.adapter.PartyAdapter;
-import br.com.sevencode.android.feia2014.db.Event;
 import br.com.sevencode.android.feia2014.model.EventTO.EventType;
 import br.com.sevencode.android.feia2014.task.GetEventTask;
 
 public class PartyFragment extends BaseFragment {
+
+	public PartyFragment(MainActivity activity) {
+		super(activity);
+	}
 
 	private GridView partyList;
 
@@ -51,9 +53,10 @@ public class PartyFragment extends BaseFragment {
 //
 //	}
 
-	public void setAdapter(){
+	@Override
+	public void setAdapter(Context context){
 		if (partyList != null) {
-			partyList.setAdapter(new PartyAdapter(getActivity(),
+			partyList.setAdapter(new PartyAdapter(context,
 					R.layout.party_item, getEvents()));
 		}
 	}
